@@ -5,6 +5,7 @@ let currentTime = 1200; // 20 minutes in seconds
 let substitutionTime = 210; // 3:30 in seconds
 let substitutionTimer = substitutionTime; // Countdown to next substitution
 let currentPlayers = {}; // To store the current players on the court
+let playerTimes = {}; // To track each player's playing time
 
 let substitutions = []; // Array to track all substitutions
 let upcomingSubstitutionIndex = 0;
@@ -21,6 +22,17 @@ function startGame(event) {
             document.getElementById('wing1').value,
             document.getElementById('wing2').value
         ]
+    };
+
+    // Initialize player times
+    playerTimes = {
+        [currentPlayers.pointGuard]: 0,
+        [currentPlayers.center]: 0,
+        [currentPlayers.powerForward]: 0,
+        ...currentPlayers.wings.reduce((acc, wing) => {
+            acc[wing] = 0;
+            return acc;
+        }, {})
     };
 
     // Show game interface
@@ -92,6 +104,9 @@ function substitutePlayers() {
     // Add this substitution to the table
     updateSubstitutionSchedule();
 
+    // Update player playing times
+    updatePlayerTimes(nextSub.in);
+
     // Move to the next substitution
     upcomingSubstitutionIndex++;
 
@@ -100,18 +115,9 @@ function substitutePlayers() {
     document.getElementById('substitute-btn').classList.add('hidden');
 }
 
-function initializeSubstitutionSchedule() {
-    substitutions = [
-        { time: '03:30', in: 'Point Guard 2', out: 'Point Guard 1' },
-        { time: '07:00', in: 'Center 2', out: 'Center 1' },
-        { time: '10:30', in: 'Power Forward 2', out: 'Power Forward 1' },
-        { time: '14:00', in: 'Wing 3', out: 'Wing 1' },
-        { time: '17:30', in: 'Point Guard 1', out: 'Point Guard 2' },
-        { time: '20:00', in: 'Wing 1', out: 'Wing 2' },
-        { time: '24:30', in: 'Center 1', out: 'Center 2' },
-        { time: '28:00', in: 'Power Forward 1', out: 'Power Forward 2' },
-        { time: '31:30', in: 'Wing 2', out: 'Wing 3' },
-    ];
+function updatePlayerTimes(player) {
+    playerTimes[player] += 3.5; // Increment by 3.5 minutes for each substitution
+    updatePlayerTimeTable();
 }
 
 function updateSubstitutionSchedule() {
@@ -121,9 +127,3 @@ function updateSubstitutionSchedule() {
         let row = document.createElement('tr');
         row.innerHTML = `
             <td>${sub.time}</td>
-            <td>${sub.in}</td>
-            <td>${sub.out}</td>
-        `;
-        tableBody.appendChild(row);
-    });
-}
