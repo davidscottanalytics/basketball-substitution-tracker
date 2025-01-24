@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Basketball Substitution Tracker</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="container">
+    <h1>Basketball Substitution Tracker</h1>
+
+    <!-- Player Input Section -->
+    <div class="input-section">
+      <h2>Enter Player Names</h2>
+      <label>Point Guard 1:</label>
+      <input type="text" id="pg1" placeholder="Enter PG1 Name">
+      <label>Point Guard 2:</label>
+      <input type="text" id="pg2" placeholder="Enter PG2 Name">
+      <label>Center 1:</label>
+      <input type="text" id="c1" placeholder="Enter C1 Name">
+      <label>Center 2:</label>
+      <input type="text" id="c2" placeholder="Enter C2 Name">
+      <label>Power Forward 1:</label>
+      <input type="text" id="pf1" placeholder="Enter PF1 Name">
+      <label>Power Forward 2:</label>
+      <input type="text" id="pf2" placeholder="Enter PF2 Name">
+      <label>Wing 1:</label>
+      <input type="text" id="w1" placeholder="Enter W1 Name">
+      <label>Wing 2:</label>
+      <input type="text" id="w2" placeholder="Enter W2 Name">
+      <label>Wing 3:</label>
+      <input type="text" id="w3" placeholder="Enter W3 Name">
+    </div>
+
+    <!-- Timer and Substitution Info -->
+    <div class="timer-section">
+      <h2>Game Timer: <span id="time">00:00</span></h2>
+      <button id="startBtn">Start Timer</button>
+    </div>
+
+    <div class="substitution-info">
+      <h3>Current Substitutions:</h3>
+      <ul id="substitutions-list"></ul>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
