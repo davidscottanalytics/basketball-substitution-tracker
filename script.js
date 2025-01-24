@@ -1,11 +1,13 @@
 // script.js
 
 let gameTimer;
-let currentTime = 0;
+let countdownTimer;
+let currentTime = 200; // Start from 3:20 (200 seconds)
 let substitutions = [];
 
 const startBtn = document.getElementById("startBtn");
-const timeDisplay = document.getElementById("time");
+const countdownDisplay = document.getElementById("countdown");
+const nextSubstitution = document.getElementById("next-substitution");
 const substitutionsList = document.getElementById("substitutions-list");
 
 let players = {
@@ -32,55 +34,53 @@ function startTimer() {
 
   startBtn.disabled = true;
 
-  gameTimer = setInterval(() => {
-    currentTime += 3;
-    updateTimeDisplay();
-    handleSubstitution();
-
-    if (currentTime >= 40) {
-      clearInterval(gameTimer);
-      alert("Game over!");
+  countdownTimer = setInterval(() => {
+    currentTime--;
+    updateCountdownDisplay();
+    if (currentTime <= 0) {
+      handleSubstitution();
+      resetCountdown();
     }
-  }, 180000); // 3 minutes in milliseconds
+  }, 1000);
 }
 
-// Function to update the timer display
-function updateTimeDisplay() {
+// Function to update the countdown timer display
+function updateCountdownDisplay() {
   let minutes = Math.floor(currentTime / 60);
   let seconds = currentTime % 60;
   seconds = seconds < 10 ? '0' + seconds : seconds;
-  timeDisplay.textContent = `${minutes}:${seconds}`;
+  countdownDisplay.textContent = `${minutes}:${seconds}`;
 }
 
 // Function to handle the substitution logic
 function handleSubstitution() {
-  const subs = [];
-  // Substitutions logic here based on your substitution pattern
-
   // Example substitution pattern:
-  if (currentTime % 6 === 0) {
+  let subs = [];
+
+  if (currentTime <= 0) {
+    // Substitution logic here
     subs.push({ in: players.pg[1], out: players.pg[0] });
     players.pg.reverse();
-  }
-  if (currentTime % 6 === 3) {
-    subs.push({ in: players.centers[1], out: players.centers[0] });
-    players.centers.reverse();
-  }
-  if (currentTime % 6 === 0) {
+
     subs.push({ in: players.pf[1], out: players.pf[0] });
     players.pf.reverse();
-  }
-  if (currentTime % 6 === 3) {
-    subs.push({ in: players.wings[2], out: players.wings[0] });
-    players.wings.push(players.wings.shift());
-  }
 
-  // Display substitutions
-  subs.forEach(sub => {
-    const listItem = document.createElement("li");
-    listItem.textContent = `${sub.in} is in, ${sub.out} is out.`;
-    substitutionsList.appendChild(listItem);
-  });
+    // Display the next substitution info
+    nextSubstitution.textContent = `Next Substitution: PG and PF`;
+
+    // Add substitution to the history list
+    subs.forEach(sub => {
+      const listItem = document.createElement("li");
+      listItem.textContent = `${sub.in} is in, ${sub.out} is out.`;
+      substitutionsList.appendChild(listItem);
+    });
+  }
 }
 
+// Reset the countdown timer to 3:20 after each substitution
+function resetCountdown() {
+  currentTime = 200;
+}
+
+// Start the timer when the button is clicked
 startBtn.addEventListener("click", startTimer);
