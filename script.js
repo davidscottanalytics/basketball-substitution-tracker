@@ -10,7 +10,7 @@ let players = {
     pg2: null,
 };
 
-let substitutions = [];
+let substitutions = [];  // Stores substitution sequence
 let playingTime = {
     center1: 0,
     center2: 0,
@@ -28,6 +28,13 @@ let currentPlayers = {
     powerForward: null,
     wings: [],
     pointGuard: null,
+};
+
+let bench = {
+    center: [],
+    powerForward: [],
+    wings: [],
+    pointGuard: [],
 };
 
 let substitutionInterval;
@@ -55,6 +62,12 @@ function startGame() {
     currentPlayers.wings = [players.wing1, players.wing2];
     currentPlayers.pointGuard = players.pg1;
 
+    // Assign all players to the bench initially
+    bench.center = [players.center2];
+    bench.powerForward = [players.pf2];
+    bench.wings = [players.wing3];
+    bench.pointGuard = [players.pg2];
+
     // Display the initial players
     updateCurrentPlayers();
     startCountdown();
@@ -75,33 +88,47 @@ function startCountdown() {
 }
 
 function handleSubstitution() {
-    // Example substitution logic (you can add more detailed logic here)
-    let subIn = [];
-    let subOut = [];
+    // Find the 2 players who have been on the court the longest
+    let playersOnCourt = [
+        { name: currentPlayers.center, position: 'center', time: playingTime[currentPlayers.center] },
+        { name: currentPlayers.powerForward, position: 'powerForward', time: playingTime[currentPlayers.powerForward] },
+        { name: currentPlayers.pointGuard, position: 'pointGuard', time: playingTime[currentPlayers.pointGuard] },
+        ...currentPlayers.wings.map((wing, idx) => ({ name: wing, position: 'wing', time: playingTime[wing] }))
+    ];
 
-    // Choose players based on positions (example)
-    if (currentPlayers.center === players.center1) {
-        subIn.push(players.center2);
-        subOut.push(players.center1);
-    } else {
-        subIn.push(players.center1);
-        subOut.push(players.center2);
-    }
+    // Sort players on court by playing time (ascending)
+    playersOnCourt.sort((a, b) => a.time - b.time);
 
-    // Update current players and playing time (simplified logic)
-    currentPlayers.center = subIn[0];
+    // Choose the 2 longest playing players to sub out
+    let playersOut = playersOnCourt.slice(0, 2);  // Sub out the 2 players with the longest time on court
 
-    // Update UI with new players in/out
-    updateCurrentPlayers();
-}
+    // Find the 2 players who have been on the bench the longest
+    let playersOnBench = [
+        ...bench.center.map(player => ({ name: player, position: 'center', time: playingTime[player] })),
+        ...bench.powerForward.map(player => ({ name: player, position: 'powerForward', time: playingTime[player] })),
+        ...bench.wings.map(player => ({ name: player, position: 'wing', time: playingTime[player] })),
+        ...bench.pointGuard.map(player => ({ name: player, position: 'pointGuard', time: playingTime[player] }))
+    ];
 
-function updateCurrentPlayers() {
-    const current = document.getElementById('current-players');
-    current.innerHTML = `
-        Center: ${currentPlayers.center} <br>
-        Power Forward: ${currentPlayers.powerForward} <br>
-        Wings: ${currentPlayers.wings.join(', ')} <br>
-        Point Guard: ${currentPlayers.pointGuard}
-    `;
-}
+    // Sort bench players by time (ascending)
+    playersOnBench.sort((a, b) => a.time - b.time);
 
+    // Choose the 2 longest sitting players to sub in
+    let playersIn = playersOnBench.slice(0, 2);
+
+    // Perform the substitution
+    playersOut.forEach(player => {
+        if (player.position === 'center') currentPlayers.center = null;
+        if (player.position === 'powerForward') currentPlayers.powerForward = null;
+        if (player.position === 'pointGuard') currentPlayers.pointGuard = null;
+        if (player.position === 'wing') currentPlayers.wings = currentPlayers.wings.filter(wing => wing !== player.name);
+        playingTime[player.name] += countdownTime;  // Add time played before substitution
+    });
+
+    // Now add players in
+    playersIn.forEach(player => {
+        if (player.position === 'center') currentPlayers.center = player.name;
+        if (player.position === 'powerForward') currentPlayers.powerForward = player.name;
+        if (player.position === 'pointGuard') currentPlayers.pointGuard = player.name;
+        if (player.position === 'wing') currentPlayers.wings.push(player.name);
+        bench[player.posi
