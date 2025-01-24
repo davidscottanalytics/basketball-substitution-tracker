@@ -34,9 +34,35 @@
         <div id="game-info" class="hidden">
             <h2>Game Timer</h2>
             <p id="timer">20:00</p>
-            <p id="substitution-warning" class="hidden">Substitution Time! (Every 3:30)</p>
+            <p id="countdown">Substitution in: 03:30</p>
+
+            <h3>Players in the Game</h3>
+            <ul id="current-players">
+                <li>Point Guard: <span id="current-pg">--</span></li>
+                <li>Center: <span id="current-center">--</span></li>
+                <li>Power Forward: <span id="current-pf">--</span></li>
+                <li>Wings: <span id="current-wings">--</span></li>
+            </ul>
+
+            <h3>Next Substitution</h3>
+            <p id="substitution-info">Next: <span id="next-sub-in">--</span> comes in, <span id="next-sub-out">--</span> goes out</p>
+
             <button id="substitute-btn" class="hidden">Substitute Players</button>
         </div>
+
+        <h3>Substitution Schedule</h3>
+        <table id="substitution-schedule">
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Point Guard</th>
+                    <th>Center</th>
+                    <th>Power Forward</th>
+                    <th>Wings</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
     </div>
 
     <script src="app.js"></script>
