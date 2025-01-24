@@ -1,3 +1,4 @@
+/* General Body Styling */
 body {
     font-family: Arial, sans-serif;
     background-color: #f3f3f3;
@@ -12,6 +13,7 @@ body {
     text-align: center;
 }
 
+/* Form and Inputs */
 form {
     margin-bottom: 20px;
 }
@@ -19,8 +21,9 @@ form {
 input {
     margin: 5px;
     padding: 10px;
-    width: 200px;
+    width: 100%;
     box-sizing: border-box;
+    font-size: 14px;
 }
 
 button {
@@ -29,16 +32,86 @@ button {
     color: white;
     border: none;
     cursor: pointer;
+    width: 100%;
+    font-size: 16px;
 }
 
 button:hover {
     background-color: #218838;
 }
 
+/* Hide Elements by Default */
 .hidden {
     display: none;
 }
 
-h1, h2 {
+/* Styling for Player and Game Information */
+#game-info {
+    margin-top: 20px;
+}
+
+h1, h2, h3 {
     color: #333;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+}
+
+ul li {
+    padding: 5px 0;
+    font-size: 18px;
+}
+
+/* Countdown and Timer */
+#countdown {
+    font-size: 18px;
+    color: #ff6347;
+}
+
+/* Substitution Schedule Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th, table td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+table th {
+    background-color: #f4f4f4;
+}
+
+/* Media Query for Small Screens */
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+
+    input, button {
+        font-size: 16px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    ul li {
+        font-size: 16px;
+    }
+
+    table th, table td {
+        font-size: 14px;
+    }
+
+    #substitute-btn {
+        margin-top: 20px;
+    }
 }
