@@ -1,52 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Basketball Substitution Tracker</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basketball Substitution Tracker</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-  <div class="container">
-    <h1>Basketball Substitution Tracker</h1>
-
-    <!-- Player Input Section -->
-    <div class="input-section">
-      <h2>Enter Player Names</h2>
-      <label>Point Guard 1:</label>
-      <input type="text" id="pg1" placeholder="Enter PG1 Name">
-      <label>Point Guard 2:</label>
-      <input type="text" id="pg2" placeholder="Enter PG2 Name">
-      <label>Center 1:</label>
-      <input type="text" id="c1" placeholder="Enter C1 Name">
-      <label>Center 2:</label>
-      <input type="text" id="c2" placeholder="Enter C2 Name">
-      <label>Power Forward 1:</label>
-      <input type="text" id="pf1" placeholder="Enter PF1 Name">
-      <label>Power Forward 2:</label>
-      <input type="text" id="pf2" placeholder="Enter PF2 Name">
-      <label>Wing 1:</label>
-      <input type="text" id="w1" placeholder="Enter W1 Name">
-      <label>Wing 2:</label>
-      <input type="text" id="w2" placeholder="Enter W2 Name">
-      <label>Wing 3:</label>
-      <input type="text" id="w3" placeholder="Enter W3 Name">
+    <div class="container">
+        <h1>Basketball Substitution Tracker</h1>
+        <form id="player-form">
+            <h2>Enter Player Names</h2>
+            <label for="pointGuard">Point Guards:</label>
+            <input type="text" id="pointGuard1" placeholder="Point Guard 1">
+            <input type="text" id="pointGuard2" placeholder="Point Guard 2">
+            
+            <label for="centers">Centers:</label>
+            <input type="text" id="center1" placeholder="Center 1">
+            <input type="text" id="center2" placeholder="Center 2">
+            
+            <label for="powerForwards">Power Forwards:</label>
+            <input type="text" id="powerForward1" placeholder="Power Forward 1">
+            <input type="text" id="powerForward2" placeholder="Power Forward 2">
+            
+            <label for="wings">Wings:</label>
+            <input type="text" id="wing1" placeholder="Wing 1">
+            <input type="text" id="wing2" placeholder="Wing 2">
+            <input type="text" id="wing3" placeholder="Wing 3">
+            
+            <button type="submit">Start Game</button>
+        </form>
+        
+        <div id="game-info" class="hidden">
+            <h2>Game Timer</h2>
+            <p id="timer">20:00</p>
+            <p id="substitution-warning" class="hidden">Substitution Time! (Every 3:30)</p>
+            <button id="substitute-btn" class="hidden">Substitute Players</button>
+        </div>
     </div>
 
-    <!-- Timer and Substitution Info -->
-    <div class="timer-section">
-      <h2>Next Substitution In: <span id="countdown">03:20</span></h2>
-      <h3 id="next-substitution">Next Substitution: PG and PF</h3>
-      <button id="startBtn">Start Timer</button>
-    </div>
-
-    <div class="substitution-info">
-      <h3>Substitution History:</h3>
-      <ul id="substitutions-list"></ul>
-    </div>
-  </div>
-
-  <script src="script.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
